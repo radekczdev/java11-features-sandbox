@@ -12,33 +12,33 @@ public class MultithreadingApplication {
   private static final Logger logger = LoggerFactory.getLogger("Logger in MAIN");
 
   public static void main(String[] args) {
-//    logger.info("Current thread ID: " + Thread.currentThread().getId());
-//    try {
-//      Runnable classForNewThread = new ClassForNewThread();
-//      var t = new Thread(classForNewThread);
-//      t.start();
-////      Thread.currentThread().wait(5000);
-//      if(t.isInterrupted()) {
-//        logger.warn("I CARE about Runnables!");
-//      } else {
-//        logger.warn("I don't care about Runnables!");
-//      }
-//    } catch (Exception e) {
-//      logger.error("Catched exception: " + e);
-//    }
-    logger.info("Current thread ID: {}", Thread.currentThread().getId());
+    logger.info("Current thread ID: " + Thread.currentThread().getId());
     try {
-      var classForNewThread = new ClassForNewThread();
-      classForNewThread.run();
-      // Warning should change
-      if(Thread.currentThread().isInterrupted()) {
+      Runnable classForNewThread = new ClassForNewThread();
+      var t = new Thread(classForNewThread);
+      t.start();
+//      Thread.currentThread().wait(5000);
+      if(t.isInterrupted()) {
         logger.warn("I CARE about Runnables!");
       } else {
         logger.warn("I don't care about Runnables!");
       }
     } catch (Exception e) {
-      logger.error("Catched exception: {}", e);
+      logger.error("Catched exception: " + e);
     }
+//    logger.info("Current thread ID: {}", Thread.currentThread().getId());
+//    try {
+//      var classForNewThread = new ClassForNewThread();
+//      classForNewThread.run();
+//      // Warning should change
+//      if(Thread.currentThread().isInterrupted()) {
+//        logger.warn("I CARE about Runnables!");
+//      } else {
+//        logger.warn("I don't care about Runnables!");
+//      }
+//    } catch (Exception e) {
+//      logger.error("Catched exception: {}", e);
+//    }
   }
 
 }

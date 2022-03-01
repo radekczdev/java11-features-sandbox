@@ -20,7 +20,7 @@ public class ClassForNewThread implements Runnable {
     } catch (InterruptedException e) {
       logger.error(e.getMessage(), e);
       // Comment and uncomment this line to see change.
-//      Thread.currentThread().interrupt();
+      Thread.currentThread().interrupt();
     }
   }
 }
