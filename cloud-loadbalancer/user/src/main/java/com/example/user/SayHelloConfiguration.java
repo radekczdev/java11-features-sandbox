@@ -1,19 +1,35 @@
 package com.example.user;
 
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.client.DefaultServiceInstance;
 import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.loadbalancer.core.DiscoveryClientServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.env.Environment;
 import reactor.core.publisher.Flux;
 
+@RequiredArgsConstructor
 public class SayHelloConfiguration {
+
+  public static final String SAY_HELLO = "say-hello";
+  private final DiscoveryClient discoveryClient;
+  private final Environment environment;
+
+//  @Bean
+//  @Primary
+  ServiceInstanceListSupplier serviceInstanceListSupplier() {
+    return new DemoServiceInstanceListSupplier(SAY_HELLO);
+  }
 
   @Bean
   @Primary
-  ServiceInstanceListSupplier serviceInstanceListSupplier() {
-    return new DemoServiceInstanceListSupplier("say-hello");
+  ServiceInstanceListSupplier eurekaServiceInstanceListSupplier() {
+    return new DiscoveryClientServiceInstanceListSupplier(discoveryClient, environment);
   }
 
 }
