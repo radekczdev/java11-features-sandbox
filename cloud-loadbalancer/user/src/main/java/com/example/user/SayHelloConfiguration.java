@@ -22,7 +22,7 @@ record DemoServiceInstanceListSupplier(String serviceId) implements ServiceInsta
 
   @Override
   public String getServiceId() {
-    return serviceId;
+    return this.serviceId;
   }
 
   @Override
@@ -30,9 +30,9 @@ record DemoServiceInstanceListSupplier(String serviceId) implements ServiceInsta
     final var localhost = "localhost";
     return Flux
         .just(List.of(
-            new DefaultServiceInstance(serviceId + "1", serviceId, localhost, 8090, false),
-            new DefaultServiceInstance(serviceId + "2", serviceId, localhost, 9092, false),
-            new DefaultServiceInstance(serviceId + "3", serviceId, localhost, 9999, false)
+            new DefaultServiceInstance(this.serviceId + "1", this.serviceId, localhost, 8090, false),
+            new DefaultServiceInstance(this.serviceId + "2", this.serviceId, localhost, 9092, false),
+            new DefaultServiceInstance(this.serviceId + "3", this.serviceId, localhost, 9999, false)
         ));
   }
 }
