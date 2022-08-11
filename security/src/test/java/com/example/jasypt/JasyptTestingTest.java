@@ -35,11 +35,12 @@ class JasyptTestingTest {
   @Test
   void usingOtherAlgorithmEncryption() {
     StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-    encryptor.setPassword("some-random-password");
-    encryptor.setAlgorithm("PBEWithMD5AndTripleDES");
+    encryptor.setPassword("test");
+    encryptor.setAlgorithm("PBEWithMD5AndDES");
 
-    String privateData = "secret-data";
+    String privateData = "yPVkWq5UXm4cTeUSMWn0ZCiCf9ecYrVU";
     String encryptedText = encryptor.encrypt(privateData);
+    System.out.println(encryptedText);
     String plainText = encryptor.decrypt(encryptedText);
 
     assertNotSame(privateData, encryptedText);

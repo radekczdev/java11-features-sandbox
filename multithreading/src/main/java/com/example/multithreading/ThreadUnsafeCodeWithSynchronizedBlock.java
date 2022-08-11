@@ -24,6 +24,7 @@ public class ThreadUnsafeCodeWithSynchronizedBlock {
 
   private void incrementAndReport() { // adding synchronized after private is same as sync block below
     synchronized (this) {
+      System.out.println(Thread.currentThread().getName());
       System.out.print((++sheepCount) + " ");
     }
   }
