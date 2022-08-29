@@ -1,15 +1,12 @@
-package publishsubscribe;
+package transactions;
 
-import static javax.jms.Session.AUTO_ACKNOWLEDGE;
-import static javax.jms.Session.CLIENT_ACKNOWLEDGE;
-import static javax.jms.Session.DUPS_OK_ACKNOWLEDGE;
+import static javax.jms.Session.SESSION_TRANSACTED;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
-import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
@@ -17,10 +14,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import lombok.extern.log4j.Log4j2;
-import org.apache.activemq.command.ProducerAck;
 
 @Log4j2
-public class JmsConsumer1 {
+public class JmsConsumerCommit {
   public static void main(String[] args) {
     ConnectionFactory connectionFactory;
     Connection connection = null;
@@ -34,9 +30,7 @@ public class JmsConsumer1 {
       connection.start();
 
       //2. create session, get topic and create temp queue
-//      Session session = connection.createSession(false, AUTO_ACKNOWLEDGE);
-//      Session session = connection.createSession(false, CLIENT_ACKNOWLEDGE);
-      Session session = connection.createSession(false, DUPS_OK_ACKNOWLEDGE);
+      Session session = connection.createSession(true, SESSION_TRANSACTED);
       Topic topic = (Topic) initialContext.lookup("jms.pstopic");
 
       // 3. create consumer
@@ -47,6 +41,7 @@ public class JmsConsumer1 {
         TextMessage textMessage = (TextMessage) messageConsumer.receive();
         String body = textMessage.getText();
         log.info(body);
+        session.commit();
 
         // 5. create producer and send response
         Destination replyTo = textMessage.getJMSReplyTo();

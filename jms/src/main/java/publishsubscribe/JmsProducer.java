@@ -1,6 +1,9 @@
 package publishsubscribe;
 
 import static javax.jms.Session.AUTO_ACKNOWLEDGE;
+import static javax.jms.Session.CLIENT_ACKNOWLEDGE;
+import static javax.jms.Session.DUPS_OK_ACKNOWLEDGE;
+import static javax.jms.Session.SESSION_TRANSACTED;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
@@ -32,7 +35,10 @@ public class JmsProducer {
       connection.start();
 
       //2. create session, get topic and create temp queue
-      Session session = connection.createSession(false, AUTO_ACKNOWLEDGE);
+//      Session session = connection.createSession(false, AUTO_ACKNOWLEDGE);
+//      Session session = connection.createSession(false, CLIENT_ACKNOWLEDGE);
+//      Session session = connection.createSession(true, CLIENT_ACKNOWLEDGE);
+      Session session = connection.createSession(true, SESSION_TRANSACTED);
       Destination topic = (Topic) initialContext.lookup("jms.pstopic");
       Destination temporaryQueue = session.createTemporaryQueue();
 
@@ -44,11 +50,12 @@ public class JmsProducer {
       textMessage.setJMSReplyTo(temporaryQueue);
       messageProducer.send(textMessage);
       log.info("Message produced");
+      session.commit();
 
       // 4. create response consumer and read message
       MessageConsumer messageConsumer = session.createConsumer(temporaryQueue);
       TextMessage responseMessage = (TextMessage) messageConsumer.receive();
-      log.info(responseMessage.toString());
+      log.info(responseMessage.toString().replace(",","\n"));
       log.info(responseMessage.getText());
 
 
