@@ -1,4 +1,4 @@
-package com.czajor.jms11;
+package pointtopoint;
 
 import static javax.jms.Session.AUTO_ACKNOWLEDGE;
 import javax.jms.Connection;

@@ -8,6 +8,8 @@
     <module>jms</module>
     <module>jdbc</module>
     <module>katas</module>
+    <module>jdk-19</module>
+    <module>encryption</module>
   </modules>
   <dependencyManagement>
     <dependencies>
