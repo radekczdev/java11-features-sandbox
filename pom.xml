@@ -10,6 +10,7 @@
     <module>katas</module>
     <module>jdk-19</module>
     <module>encryption</module>
+    <module>jpa-hibernate</module>
   </modules>
   <dependencyManagement>
     <dependencies>

@@ -10,6 +10,7 @@ public class JwtEncryptionDecryption {
     String token = "a.b.c";
     String[] splitted = token.split("\\.");
 
+    Arrays.stream(splitted).map(JwtEncryptionDecryption::decode).forEach(System.out::println);
     var secondPartAsString = decode(splitted[1]).replace("","");
     var secondPartEncoded = encode(secondPartAsString);
 
