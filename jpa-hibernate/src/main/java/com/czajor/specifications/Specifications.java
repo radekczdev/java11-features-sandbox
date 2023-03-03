@@ -16,6 +16,27 @@ public class Specifications {
     SpringApplication.run(Specifications.class, args);
   }
 
+  @Bean
+  public CommandLineRunner specificationsTest(MovieRepository movieRepository) {
+    return args -> {
+      movieRepository.saveAll(List.of(
+          new Movie("Hobbit", "Adventure", 6.5, 300, 2012),
+          new Movie("Lord of The Rings", "Adventure", 8.5, 180, 2001),
+          new Movie("The Office", "tv series", 8, 20, 2005),
+          new Movie("Silicon Valley", "tv series", 5.5, 25, 2018),
+          new Movie("Spider Man", "action", 5, 180, 2005),
+          new Movie("Batman", "action", 6.5, 165, 2005)
+      ));
+
+      findByGenreTest(movieRepository);
+      findByTitleAndRatingGreaterThan(movieRepository);
+      findByYearLessThanAndRatingGreaterThan(movieRepository);
+      findByWatchTimeGreaterEqualsSortByTitle(movieRepository);
+      findByTitleDifferentThanAndPaginate(movieRepository);
+
+    };
+  }
+
   private static void findByWatchTimeGreaterEqualsSortByTitle(MovieRepository movieRepository) {
     printStars();
 
@@ -82,27 +103,6 @@ public class Specifications {
     result.forEach(System.out::println);
 
     printStars();
-  }
-
-  @Bean
-  public CommandLineRunner specificationsTest(MovieRepository movieRepository) {
-    return args -> {
-      movieRepository.saveAll(List.of(
-          new Movie("Hobbit", "Adventure", 6.5, 300, 2012),
-          new Movie("Lord of The Rings", "Adventure", 8.5, 180, 2001),
-          new Movie("The Office", "tv series", 8, 20, 2005),
-          new Movie("Silicon Valley", "tv series", 5.5, 25, 2018),
-          new Movie("Spider Man", "action", 5, 180, 2005),
-          new Movie("Batman", "action", 6.5, 165, 2005)
-      ));
-
-      findByGenreTest(movieRepository);
-      findByTitleAndRatingGreaterThan(movieRepository);
-      findByYearLessThanAndRatingGreaterThan(movieRepository);
-      findByWatchTimeGreaterEqualsSortByTitle(movieRepository);
-      findByTitleDifferentThanAndPaginate(movieRepository);
-
-    };
   }
 
 }

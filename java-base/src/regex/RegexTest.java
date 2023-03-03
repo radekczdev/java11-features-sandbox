@@ -1,12 +1,12 @@
-package com.czajor.tests.utils;
+package regex;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
-
 public class RegexTest {
+
 
   @Test
   void shouldExtractNumber(){
