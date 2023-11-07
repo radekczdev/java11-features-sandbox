@@ -4,6 +4,7 @@ import com.czajor.manytoonecheck.domain.Post;
 import com.czajor.manytoonecheck.domain.PostComment;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,23 +17,30 @@ public class Checking {
   public void runChecking() {
     Post post = new Post("First post");
 
-    post.addComment(
-        new PostComment("My first review")
-    );
+    PostComment pc1 = new PostComment("My first review");
+    pc1.setPost(post);
 
-    post.addComment(
-        new PostComment("My second review")
-    );
+    PostComment pc2 = new PostComment("My second review");
+    pc2.setPost(post);
 
-    post.addComment(
-        new PostComment("My third review")
-    );
+    PostComment pc3 = new PostComment("My third review");
+    pc3.setPost(post);
 
     entityManager.persist(post);
+    entityManager.persist(pc1);
+    entityManager.persist(pc2);
+    entityManager.persist(pc3);
 
-    Post post1 = entityManager.find(Post.class, 1);
-    PostComment comment = post1.getComments().get(0);
+    List<PostComment> comments = entityManager.createQuery(
+            """
+                select pc
+                from PostComment pc
+                where pc.post.id = :postId
+                """, PostComment.class)
+        .setParameter("postId", 1L)
+        .getResultList();
 
-    post1.removeComment(comment);
+    System.out.println(comments.size());
+
   }
 }
