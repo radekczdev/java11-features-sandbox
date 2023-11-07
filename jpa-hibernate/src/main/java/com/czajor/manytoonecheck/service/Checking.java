@@ -14,22 +14,25 @@ public class Checking {
 
   @Transactional
   public void runChecking() {
-
     Post post = new Post("First post");
 
-    post.getComments().add(
+    post.addComment(
         new PostComment("My first review")
     );
 
-    post.getComments().add(
+    post.addComment(
         new PostComment("My second review")
     );
 
-    post.getComments().add(
+    post.addComment(
         new PostComment("My third review")
     );
 
     entityManager.persist(post);
-    System.out.println();
+
+    Post post1 = entityManager.find(Post.class, 1);
+    PostComment comment = post1.getComments().get(0);
+
+    post1.removeComment(comment);
   }
 }
