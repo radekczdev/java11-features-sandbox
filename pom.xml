@@ -11,6 +11,7 @@
     <module>jdk-19</module>
     <module>encryption</module>
     <module>jpa-hibernate</module>
+      <module>sealed-interfaces</module>
   </modules>
   <dependencyManagement>
     <dependencies>
